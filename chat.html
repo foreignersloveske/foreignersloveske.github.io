@@ -12,7 +12,7 @@ body{background:#f5f5f5}
 .wallet-area{display:flex;gap:6px;align-items:center}
 .wallet{background:#222;color:#2ecc71;padding:6px 10px;border-radius:20px;font-weight:bold;font-size:12px}
 .withdraw-btn{background:#2ecc71;color:white;padding:6px 10px;border-radius:20px;font-size:11px;font-weight:bold;border:none;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 90px 12px}
 .card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.08);position:relative;cursor:pointer}
 .card img{width:100%;height:170px;object-fit:cover}
 .info{padding:8px}
@@ -22,7 +22,6 @@ body{background:#f5f5f5}
 .lock{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.82);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:10px}
 .btn{margin-top:6px;background:#ff416c;color:white;padding:7px 12px;border-radius:20px;font-size:11px;font-weight:bold;border:none;cursor:pointer}
 .btn-green{background:#2ecc71;width:100%;margin-top:5px}
-.unlocked.lock{display:none}
 .premium-banner{background:linear-gradient(90deg,#ff416c,#ff9a44);color:white;padding:10px;text-align:center;font-weight:bold;font-size:12px}
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:300;padding:15px}
 .modal-box{background:white;width:100%;max-width:380px;border-radius:20px;padding:20px;text-align:center;max-height:92vh;overflow-y:auto}
@@ -37,6 +36,10 @@ body{background:#f5f5f5}
 .chat-input{display:flex;gap:6px;margin-top:10px}
 .chat-input input{flex:1;padding:10px;border-radius:20px;border:1px solid #ddd}
 .chat-input button{background:#ff416c;color:white;border:none;padding:10px 15px;border-radius:20px;font-weight:bold}
+.footer-links{background:white;padding:15px;text-align:center;font-size:11px;color:#777;border-top:1px solid #eee;margin-top:10px}
+.footer-links b{color:#ff416c;cursor:pointer;text-decoration:underline}
+.whatsapp-float{position:fixed;bottom:20px;right:15px;background:#25D366;color:white;width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 15px rgba(0,0,0,0.3);z-index:200;cursor:pointer;text-decoration:none}
+.age-box{border:2px solid #ff416c}
 </style>
 </head>
 <body>
@@ -50,39 +53,83 @@ body{background:#f5f5f5}
 <div class="premium-banner">🔒 Touch Any Girl → Pay KES 150 to 0706900843 → Paste SMS (Valid 5 MINS) → Earn $300!</div>
 <div class="grid" id="grid"></div>
 
-<!-- PAY MODAL WITH 5 MIN RULE -->
+<div class="footer-links">
+<b onclick="openModal('termsModal')">Terms & Conditions</b> | <b onclick="openModal('privacyModal')">Privacy Policy</b> | <b onclick="openModal('ageModal2')">18+ Policy</b><br><br>
+© 2026 ForeignersLove - Entertainment Platform<br>
+All profiles are for entertainment. Must be 18+ to use.<br>
+Support: <b>0706900843</b>
+</div>
+
+<a href="https://wa.me/254706900843?text=Hi%20I%20paid%20KES%20150%20to%200706900843%20but%20not%20unlocked" target="_blank" class="whatsapp-float" title="Chat Support">💬</a>
+
+<!-- AGE VERIFICATION POPUP - SHOWS ON LOAD -->
+<div class="modal" id="ageModal" style="display:flex;z-index:500">
+<div class="modal-box age-box">
+<h2 style="color:#ff416c">🔞 18+ Age Verification</h2>
+<p style="font-size:13px;margin:12px 0;text-align:left">
+This platform contains adult chat and is for <b>ENTERTAINMENT ONLY</b>. You must be 18 years or older to continue.
+<br><br>
+<b>By clicking I Agree you confirm:</b><br>
+✅ I am 18+ years old<br>
+✅ I understand all profiles are for entertainment<br>
+✅ I agree to <span style="color:#ff416c;text-decoration:underline" onclick="openModal('termsModal')">Terms</span><br>
+✅ I pay KES 150 voluntarily to unlock chats
+</p>
+<button onclick="acceptAge()" style="background:#ff416c;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;font-size:15px">✅ I am 18+ - Enter Platform</button>
+<button onclick="window.location.href='https://google.com'" style="background:#eee;color:#555;padding:10px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:8px">❌ I am Under 18 - Exit</button>
+</div>
+</div>
+
+<!-- TERMS MODAL -->
+<div class="modal" id="termsModal">
+<div class="modal-box" style="text-align:left">
+<h3 style="color:#ff416c;text-align:center">📜 Terms & Conditions</h3>
+<div style="font-size:11px;margin-top:10px;line-height:1.5">
+<b>1. Age Requirement:</b> You must be 18+ years.<br><br>
+<b>2. Payment:</b> KES 150 per unlock is paid to Till <b>0706900843 (JULIUS)</b>. Payment is for chat access, non-refundable.<br><br>
+<b>3. SMS Verification:</b> M-Pesa SMS must be pasted within 5 minutes of payment. System validates time, amount (150), and recipient (Julius/0706900843).<br><br>
+<b>4. Earnings:</b> $300 is earned AFTER chatting 5 messages with unlocked profile. Balance is virtual entertainment credits. Minimum withdrawal $1000 (4 chats).<br><br>
+<b>5. Withdrawal:</b> Withdrawal requests are processed within 24hrs to your M-Pesa after verification.<br><br>
+<b>6. Entertainment:</b> All profiles are for entertainment and fantasy chat. Not a real dating guarantee.<br><br>
+<b>7. Support:</b> WhatsApp 0706900843 for any unlock issues.<br><br>
+<b>8. Privacy:</b> We do not share M-Pesa codes. Used only for verification.
+</div>
+<button onclick="closeModal('termsModal')" style="background:#222;color:white;padding:10px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:12px">I Agree & Close</button>
+</div>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div class="modal" id="privacyModal">
+<div class="modal-box" style="text-align:left">
+<h3 style="color:#ff416c;text-align:center">🔒 Privacy Policy</h3>
+<div style="font-size:11px;margin-top:10px;line-height:1.5">
+We respect your privacy.<br><br>
+- M-Pesa SMS you paste is only checked for 150, Julius, and time (5 min rule). Not stored.<br>
+- Your M-Pesa number for withdrawal is used only to send payment.<br>
+- Chat messages are not shared.<br>
+- We use local storage to save your unlocked girls and balance.<br>
+- Support via WhatsApp: 0706900843
+</div>
+<button onclick="closeModal('privacyModal')" style="background:#222;color:white;padding:10px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:12px">Close</button>
+</div>
+</div>
+
+<!-- PAY MODAL -->
 <div class="modal" id="payModal">
 <div class="modal-box">
-<h3 id="modalTitle" style="color:#ff416c">Unlock Girl - KES 150</h3>
+<h3 id="modalTitle" style="color:#ff416c">Unlock</h3>
 <div class="till-box">
 <b>SEND KES 150 TO:</b><br>
-<span style="font-size:24px;font-weight:bold;color:#222">0706900843</span><br>
+<span style="font-size:24px;font-weight:bold">0706900843</span><br>
 Name: <b>JULIUS</b><br>
 <span style="font-size:11px;background:#222;color:white;padding:3px 10px;border-radius:10px">M-Pesa Send Money</span>
 </div>
-
-<div class="timer-box">
-⏰ IMPORTANT: M-Pesa SMS must be from LAST 5 MINUTES only!<br>
-System checks time automatically. Old SMS = REJECTED.
-</div>
-
-<div style="background:#ffeaea;padding:8px;border-radius:10px;font-size:11px;text-align:left">
-<b>STEPS:</b><br>
-1. M-Pesa > Send Money > 0706900843<br>
-2. Amount: 150 > PIN<br>
-3. You will get SMS like:<br>
-<span style="font-size:10px;color:#555">"QJ123... Confirmed. Ksh150.00 sent to JULIUS 0706900843 on 15/10/26 at 2:23 PM"</span><br>
-4. Copy THAT SMS and paste below within 5 mins!
-</div>
-
-<textarea class="input" id="mpesaCode" placeholder="Paste your RECENT M-Pesa SMS here (must be within 5 minutes)...
-
-Example: QJ45H8I9K2 Confirmed. Ksh150.00 sent to JULIUS MWANGI 0706900843 on 15/10/26 at 2:23 PM Transaction cost..."></textarea>
-
-<button class="verify-btn" onclick="verifyPayment()">✅ Verify SMS (5 Min Check)</button>
+<div class="timer-box">⏰ SMS must be from LAST 5 MINUTES only!</div>
+<textarea class="input" id="mpesaCode" placeholder="Paste RECENT M-Pesa SMS here..."></textarea>
+<button class="verify-btn" onclick="verifyPayment()">✅ Verify (5 Min Check)</button>
 <button onclick="closeModal('payModal')" style="background:none;border:none;color:#777;margin-top:8px;font-size:12px">Cancel</button>
 <p id="errorMsg" style="font-size:11px;display:none;margin-top:8px;padding:8px;border-radius:8px"></p>
-<p style="font-size:10px;color:#999;margin-top:6px">System auto-validates amount, number, name & time</p>
+<a href="https://wa.me/254706900843" target="_blank" style="font-size:11px;color:#25D366;display:block;margin-top:8px">Need help? WhatsApp Support</a>
 </div>
 </div>
 
@@ -90,14 +137,14 @@ Example: QJ45H8I9K2 Confirmed. Ksh150.00 sent to JULIUS MWANGI 0706900843 on 15/
 <div class="modal" id="chatModal">
 <div class="modal-box">
 <h3 id="chatName" style="color:#ff416c">Chat</h3>
-<div style="font-size:11px;color:#2ecc71">● Online - Earn $300 after 5 messages</div>
+<div style="font-size:11px;color:#2ecc71">● Online - Earn $300 after 5 msgs</div>
 <div class="chat-box" id="chatBox"></div>
 <div class="chat-input">
 <input id="chatInput" placeholder="Type..." onkeypress="if(event.key==='Enter')sendMsg()">
 <button onclick="sendMsg()">Send</button>
 </div>
-<div style="background:#fff3cd;padding:8px;border-radius:10px;margin-top:10px;font-size:11px">💰 Progress: <span id="msgCount">0/5</span> to earn $300</div>
-<button id="earnBtn" onclick="claimEarning()" style="display:none;background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:10px">🎉 Claim $300 Now!</button>
+<div style="background:#fff3cd;padding:8px;border-radius:10px;margin-top:10px;font-size:11px">💰 <span id="msgCount">0/5</span> to earn $300</div>
+<button id="earnBtn" onclick="claimEarning()" style="display:none;background:#2ecc71;color:white;padding:12px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:10px">🎉 Claim $300</button>
 <button onclick="closeModal('chatModal')" style="background:none;border:none;color:#777;margin-top:8px;font-size:12px">Close</button>
 </div>
 </div>
@@ -132,11 +179,18 @@ Example: QJ45H8I9K2 Confirmed. Ksh150.00 sent to JULIUS MWANGI 0706900843 on 15/
 </div>
 </div>
 
+<div class="modal" id="ageModal2">
+<div class="modal-box"><h3>18+ Policy</h3><p style="font-size:11px;margin-top:8px">This is 18+ entertainment platform. All users must be adults. Fantasy chat only.</p><button onclick="closeModal('ageModal2')" style="background:#222;color:white;padding:10px;border:none;border-radius:10px;width:100%;margin-top:10px">Close</button></div>
+</div>
+
 <script>
 let balance=parseInt(localStorage.getItem('fl_balance')||'0');
 let unlocked=JSON.parse(localStorage.getItem('fl_unlocked')||'[]');
 let earned=JSON.parse(localStorage.getItem('fl_earned')||'[]');
 let currentIdx=null,currentName='',chatMsgs=0;
+if(localStorage.getItem('fl_age')==='yes'){document.getElementById('ageModal').style.display='none';}
+function acceptAge(){localStorage.setItem('fl_age','yes');document.getElementById('ageModal').style.display='none';}
+function openModal(id){document.getElementById(id).style.display='flex';}
 updateWallet();
 const girls=[
 {n:'Sofia',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/1.jpg'},
@@ -160,145 +214,30 @@ const girls=[
 {n:'Ella',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/19.jpg'},
 {n:'Aria',a:24,o:'Australia',i:'https://randomuser.me/api/portraits/women/20.jpg'},
 ];
-
-function render(){
-let html='';girls.forEach((g,idx)=>{
-let isUnlocked=unlocked.includes(idx);let isEarned=earned.includes(idx);
-html+=`<div class="card ${isUnlocked?'unlocked':''}" onclick="handleCardClick(${idx},'${g.n}')">
-<img src="${g.i}"><div class="info"><div class="name">${g.n}, ${g.a}</div>
-<div class="status">${!isUnlocked?'🔒 Touch to Unlock - KES 150':isEarned?'✅ $300 Earned':'💬 Touch to Chat - Earn $300'}</div>
-<div class="earn">${isEarned?'💰 In Wallet':'Pay 150 → Chat → $300'}</div>
-${isUnlocked?`<button class="btn btn-green" onclick="event.stopPropagation();openChat(${idx},'${g.n}')">Chat Now</button>`:''}
-</div>
-<div class="lock"><span>🔒</span><div style="font-weight:bold">${g.n}</div><div style="font-size:10px;margin:3px 0">Touch to Unlock<br>KES 150 to 0706900843<br>Valid 5 MINS only</div><button class="btn" onclick="event.stopPropagation();openPay(${idx},'${g.n}')">Unlock - 150</button></div>
-</div>`;
-});document.getElementById('grid').innerHTML=html;
-}
+function render(){let html='';girls.forEach((g,idx)=>{let isUnlocked=unlocked.includes(idx);let isEarned=earned.includes(idx);html+=`<div class="card" onclick="handleCardClick(${idx},'${g.n}')"><img src="${g.i}"><div class="info"><div class="name">${g.n}, ${g.a}</div><div class="status">${!isUnlocked?'🔒 Touch to Unlock - KES 150':isEarned?'✅ $300 Earned':'💬 Touch to Chat'}</div><div class="earn">${isEarned?'💰 In Wallet':'Pay 150 → Chat → $300'}</div>${isUnlocked?`<button class="btn btn-green" onclick="event.stopPropagation();openChat(${idx},'${g.n}')">Chat Now</button>`:''}</div><div class="lock" style="${isUnlocked?'display:none':''}"><span>🔒</span><div style="font-weight:bold">${g.n}</div><div style="font-size:10px;margin:3px 0">KES 150 to 0706900843<br>Valid 5 MINS</div><button class="btn" onclick="event.stopPropagation();openPay(${idx},'${g.n}')">Unlock - 150</button></div></div>`;});document.getElementById('grid').innerHTML=html;}
 render();
-
-function handleCardClick(idx,name){
-if(!unlocked.includes(idx)){openPay(idx,name);}else{openChat(idx,name);}
-}
-
-function openPay(idx,name){currentIdx=idx;currentName=name;document.getElementById('modalTitle').innerText='Unlock '+name+' - KES 150';document.getElementById('mpesaCode').value='';let err=document.getElementById('errorMsg');err.style.display='none';document.getElementById('payModal').style.display='flex';}
+function handleCardClick(idx,name){if(!unlocked.includes(idx)){openPay(idx,name);}else{openChat(idx,name);}}
+function openPay(idx,name){currentIdx=idx;currentName=name;document.getElementById('modalTitle').innerText='Unlock '+name+' - KES 150';document.getElementById('mpesaCode').value='';document.getElementById('errorMsg').style.display='none';document.getElementById('payModal').style.display='flex';}
 function closeModal(id){document.getElementById(id).style.display='none';}
-
 function verifyPayment(){
 let code=document.getElementById('mpesaCode').value.trim();
-let err=document.getElementById('errorMsg');
-err.style.display='block';
-
-if(code.length<20){
- err.style.background='#ffeaea'; err.style.color='red';
- err.innerText='❌ Invalid! Paste FULL M-Pesa SMS. Must be like: QJ... Confirmed Ksh150 to JULIUS 0706900843 on 15/10/26 at 2:23 PM';
- return;
-}
-
-// Check required keywords
+let err=document.getElementById('errorMsg');err.style.display='block';
+if(code.length<20){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ Paste FULL M-Pesa SMS';return;}
 let lower=code.toLowerCase();
-let hasAmount = lower.includes('150') || lower.includes('ksh150') || lower.includes('ksh 150');
-let hasJulius = lower.includes('julius') || lower.includes('0706900843') || lower.includes('706900843');
-let hasConfirmed = lower.includes('confirmed') || lower.includes('sent') || lower.includes('ksh');
-
-if(!hasAmount){
- err.style.background='#ffeaea'; err.style.color='red';
- err.innerText='❌ Amount must be KES 150! Your SMS does not show 150.';
- return;
+let hasAmount=lower.includes('150');let hasJulius=lower.includes('julius')||lower.includes('0706900843');
+if(!hasAmount){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ Amount must be 150';return;}
+if(!hasJulius){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ Must be to 0706900843 JULIUS';return;}
+let timeValid=check5MinRule(code);
+if(!timeValid.valid){err.style.background='#ffeaea';err.style.color='red';err.innerText='❌ '+timeValid.reason+' Must be within 5 MINS. Send again to 0706900843';return;}
+err.style.background='#e0ffe0';err.style.color='#2ecc71';err.innerText='✅ Verified! Unlocking...';
+setTimeout(()=>{if(!unlocked.includes(currentIdx)){unlocked.push(currentIdx);localStorage.setItem('fl_unlocked',JSON.stringify(unlocked));render();}closeModal('payModal');setTimeout(()=>openChat(currentIdx,currentName),400);},800);
 }
-if(!hasJulius){
- err.style.background='#ffeaea'; err.style.color='red';
- err.innerText='❌ Must be sent to 0706900843 (JULIUS)! Your SMS does not show Julius or 0706900843';
- return;
-}
-
-// 5 MINUTE TIME CHECK
-let timeValid = check5MinRule(code);
-if(!timeValid.valid){
- err.style.background='#ffeaea'; err.style.color='red';
- err.innerText='❌ '+timeValid.reason+' This SMS is too old! M-Pesa SMS must be within last 5 MINUTES. Please send KES 150 again to 0706900843 and paste the NEW SMS immediately.';
- return;
-}
-
-// SUCCESS
-err.style.background='#e0ffe0'; err.style.color='#2ecc71';
-err.innerText='✅ Verified! SMS is valid, amount KES 150, to Julius, within 5 mins. Unlocking...';
-
-setTimeout(()=>{
-if(!unlocked.includes(currentIdx)){unlocked.push(currentIdx);localStorage.setItem('fl_unlocked',JSON.stringify(unlocked));render();}
-closeModal('payModal');
-setTimeout(()=>openChat(currentIdx,currentName),400);
-},1000);
-}
-
-function check5MinRule(code){
-// Try to extract time from M-Pesa SMS: "on 15/10/26 at 2:23 PM" or "on 15/10/2026 at 14:23"
-try{
-let now=new Date();
-
-// Look for time patterns
-let timeMatch = code.match(/at\s+(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?/);
-let dateMatch = code.match(/on\s+(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
-
-if(!timeMatch){
-// If no time found, allow but warn - check if code looks recent (contains today's date string from phone)
-// For safety, if no time pattern, we still check if message is too short? We'll allow with caution if other checks pass
-// But to enforce 5 min strictly, require time
-return {valid:false, reason:'Could not read time from SMS. Make sure SMS contains "on 15/10/26 at 2:23 PM" format.'};
-}
-
-let hour=parseInt(timeMatch[1]);
-let minute=parseInt(timeMatch[2]);
-let ampm=timeMatch[3];
-
-if(ampm){
- ampm=ampm.toUpperCase();
- if(ampm==='PM' && hour<12) hour+=12;
- if(ampm==='AM' && hour===12) hour=0;
-}
-
-let smsDate=new Date();
-if(dateMatch){
- let day=parseInt(dateMatch[1]);
- let month=parseInt(dateMatch[2])-1;
- let year=parseInt(dateMatch[3]);
- if(year<100) year+=2000;
- // Only override if date is plausible (within 1 day)
- smsDate=new Date(year,month,day,hour,minute);
-}else{
- // No date, use today with extracted time
- smsDate.setHours(hour,minute,0,0);
-}
-
-// Difference in minutes
-let diffMs = now - smsDate;
-let diffMins = diffMs / 60000;
-
-// Handle if smsDate is in future (e.g. phone time slightly ahead) - allow 2 min future tolerance
-if(diffMins < -2){
- return {valid:false, reason:'SMS time is in future (phone time mismatch).'};
-}
-
-// If difference more than 5 minutes
-if(diffMins > 5){
- return {valid:false, reason:'SMS is '+Math.floor(diffMins)+' minutes old! Expired.'};
-}
-
-// If difference negative but small, it's okay (just sent)
-if(diffMins < 0) diffMins=0;
-
-return {valid:true};
-}catch(e){
- // If parsing fails, for security reject? But to not block, allow if code is very long and has keywords
- // Strict mode: reject if cannot parse time
- return {valid:false, reason:'Could not verify time. Paste full M-Pesa SMS with date and time.'};
-}
-}
-
-function openChat(idx,name){currentIdx=idx;currentName=name;chatMsgs=0;document.getElementById('chatName').innerText='Chat with '+name;document.getElementById('chatBox').innerHTML=`<div class="msg msg-girl">Hi I'm ${name} 😘 from ${girls[idx].o}! Thanks for unlocking me with KES 150! How are you? 💕</div>`;document.getElementById('msgCount').innerText='0/5';document.getElementById('earnBtn').style.display='none';document.getElementById('chatModal').style.display='flex';}
-function sendMsg(){let input=document.getElementById('chatInput');let txt=input.value.trim();if(!txt)return;document.getElementById('chatBox').innerHTML+=`<div class="msg msg-you">${txt}</div>`;input.value='';chatMsgs++;document.getElementById('msgCount').innerText=chatMsgs+'/5';setTimeout(()=>{let replies=["Aww so sweet 🥰","I like you! Tell me more 😘","Kenyan men are nice ❤️","Want to meet someday? 😉","You make me smile! 💕"];let r=replies[Math.min(chatMsgs-1,replies.length-1)];document.getElementById('chatBox').innerHTML+=`<div class="msg msg-girl">${r}</div>`;document.getElementById('chatBox').scrollTop=9999;if(chatMsgs>=5 &&!earned.includes(currentIdx)){document.getElementById('earnBtn').style.display='block';}},700);document.getElementById('chatBox').scrollTop=9999;}
+function check5MinRule(code){try{let now=new Date();let timeMatch=code.match(/at\s+(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?/);let dateMatch=code.match(/on\s+(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);if(!timeMatch){return {valid:false,reason:'Could not read time from SMS. Need format "at 2:23 PM"'};}let hour=parseInt(timeMatch[1]);let minute=parseInt(timeMatch[2]);let ampm=timeMatch[3];if(ampm){ampm=ampm.toUpperCase();if(ampm==='PM'&&hour<12)hour+=12;if(ampm==='AM'&&hour===12)hour=0;}let smsDate=new Date();if(dateMatch){let day=parseInt(dateMatch[1]);let month=parseInt(dateMatch[2])-1;let year=parseInt(dateMatch[3]);if(year<100)year+=2000;smsDate=new Date(year,month,day,hour,minute);}else{smsDate.setHours(hour,minute,0,0);}let diffMins=(now-smsDate)/60000;if(diffMins<-2){return {valid:false,reason:'Time in future'};}if(diffMins>5){return {valid:false,reason:'SMS is '+Math.floor(diffMins)+' mins old! Expired.'};}return {valid:true};}catch(e){return {valid:false,reason:'Could not verify time'};}}
+function openChat(idx,name){currentIdx=idx;currentName=name;chatMsgs=0;document.getElementById('chatName').innerText='Chat with '+name;document.getElementById('chatBox').innerHTML=`<div class="msg msg-girl">Hi I'm ${name} 😘 from ${girls[idx].o}! Thanks for unlocking! How are you? 💕</div>`;document.getElementById('msgCount').innerText='0/5';document.getElementById('earnBtn').style.display='none';document.getElementById('chatModal').style.display='flex';}
+function sendMsg(){let input=document.getElementById('chatInput');let txt=input.value.trim();if(!txt)return;document.getElementById('chatBox').innerHTML+=`<div class="msg msg-you">${txt}</div>`;input.value='';chatMsgs++;document.getElementById('msgCount').innerText=chatMsgs+'/5';setTimeout(()=>{let replies=["Aww so sweet 🥰","I like you! 😘","Kenyan men are nice ❤️","Meet someday? 😉","You make me smile! 💕"];let r=replies[Math.min(chatMsgs-1,replies.length-1)];document.getElementById('chatBox').innerHTML+=`<div class="msg msg-girl">${r}</div>`;document.getElementById('chatBox').scrollTop=9999;if(chatMsgs>=5&&!earned.includes(currentIdx)){document.getElementById('earnBtn').style.display='block';}},700);document.getElementById('chatBox').scrollTop=9999;}
 function claimEarning(){if(earned.includes(currentIdx))return;earned.push(currentIdx);balance+=300;localStorage.setItem('fl_earned',JSON.stringify(earned));localStorage.setItem('fl_balance',balance.toString());updateWallet();render();closeModal('chatModal');document.getElementById('successText').innerText='You chatted with '+currentName+' and earned $300!';document.getElementById('successModal').style.display='flex';}
 function updateWallet(){document.getElementById('wallet').innerText='💰 $'+balance;}
-function openWithdraw(){document.getElementById('withdrawBalance').innerText='$'+balance+'.00';document.getElementById('withdrawInfo').innerText='$'+balance+' / $1000';document.getElementById('withdrawForm').style.display='block';document.getElementById('withdrawSuccess').style.display='none';document.getElementById('withdrawModal').style.display='flex';if(balance<1000){document.getElementById('withdrawInfo').innerHTML='<b style="color:red">Need $'+(1000-balance)+' more! Chat '+(Math.ceil((1000-balance)/300))+' more</b>';}}
+function openWithdraw(){document.getElementById('withdrawBalance').innerText='$'+balance+'.00';document.getElementById('withdrawInfo').innerText='$'+balance+' / $1000';document.getElementById('withdrawForm').style.display='block';document.getElementById('withdrawSuccess').style.display='none';document.getElementById('withdrawModal').style.display='flex';if(balance<1000){document.getElementById('withdrawInfo').innerHTML='<b style="color:red">Need $'+(1000-balance)+' more!</b>';}}
 function doWithdraw(){let num=document.getElementById('mpesaNumber').value.trim();if(num.length<10){alert('Enter valid M-Pesa');return;}if(balance<1000){alert('Min $1000. You have $'+balance);return;}document.getElementById('withdrawAmount').innerText='$'+balance;document.getElementById('withdrawTo').innerText=num;document.getElementById('withdrawForm').style.display='none';document.getElementById('withdrawSuccess').style.display='block';}
 </script>
 </body>

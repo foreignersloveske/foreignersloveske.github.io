@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ForeignersLove - Chat</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f5f5}
+.header{background:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);position:sticky;top:0;z-index:10}
+.header b{color:#ff416c;font-size:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.08);position:relative}
+.card img{width:100%;height:180px;object-fit:cover}
+.info{padding:10px}
+.name{font-weight:bold;font-size:14px}
+.age{font-size:12px;color:#777}
+.status{font-size:11px;color:#2ecc71}
+.lock{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:10px}
+.lock span{font-size:32px}
+.btn{margin-top:8px;background:#ff416c;color:white;padding:8px 14px;border-radius:20px;font-size:12px;text-decoration:none;font-weight:bold}
+.free .lock{display:none}
+.premium-banner{background:linear-gradient(90deg,#ff416c,#ff9a44);color:white;padding:12px;text-align:center;font-weight:bold;font-size:14px}
+</style>
+</head>
+<body>
+<div class="header"><b>ForeignersLove ❤️</b><span id="user">Hi</span></div>
+<div class="premium-banner">🔓 Unlock all 20 girls - Subscribe from KES 250/week <a href="#pay" style="color:white;text-decoration:underline">Pay Now</a></div>
+<div class="grid" id="grid"></div>
+
+<div id="pay" style="background:white;margin:15px;padding:20px;border-radius:15px;text-align:center">
+<h3 style="color:#ff416c">Choose Plan to Chat</h3>
+<p style="font-size:13px;color:#555;margin:8px 0">Pay via M-Pesa to unlock private chats</p>
+<div style="display:grid;gap:10px;margin-top:15px">
+<a href="#" style="background:#ff416c;color:white;padding:12px;border-radius:10px;text-decoration:none;font-weight:bold">Weekly - KES 250 / $2</a>
+<a href="#" style="background:#222;color:white;padding:12px;border-radius:10px;text-decoration:none;font-weight:bold">Monthly - KES 800 / $6 - Best Value</a>
+<a href="#" style="background:#ff9a44;color:white;padding:12px;border-radius:10px;text-decoration:none;font-weight:bold">Yearly - KES 5000 / $35</a>
+</div>
+<p style="font-size:11px;color:#999;margin-top:10px">After payment, WhatsApp us for activation</p>
+</div>
+
+<script>
+document.getElementById('user').innerText='Hi, '+(localStorage.getItem('fl_user')||'User');
+const girls=[
+{n:'Sofia',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/1.jpg'},
+{n:'Emma',a:24,o:'UK',i:'https://randomuser.me/api/portraits/women/2.jpg'},
+{n:'Isabella',a:23,o:'Germany',i:'https://randomuser.me/api/portraits/women/3.jpg'},
+{n:'Mia',a:21,o:'Canada',i:'https://randomuser.me/api/portraits/women/4.jpg'},
+{n:'Charlotte',a:25,o:'Australia',i:'https://randomuser.me/api/portraits/women/5.jpg'},
+{n:'Amelia',a:22,o:'Italy',i:'https://randomuser.me/api/portraits/women/6.jpg'},
+{n:'Harper',a:24,o:'France',i:'https://randomuser.me/api/portraits/women/7.jpg'},
+{n:'Ava',a:23,o:'USA',i:'https://randomuser.me/api/portraits/women/8.jpg'},
+{n:'Luna',a:21,o:'Spain',i:'https://randomuser.me/api/portraits/women/9.jpg'},
+{n:'Grace',a:26,o:'UK',i:'https://randomuser.me/api/portraits/women/10.jpg'},
+{n:'Chloe',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/11.jpg'},
+{n:'Zoe',a:23,o:'Canada',i:'https://randomuser.me/api/portraits/women/12.jpg'},
+{n:'Lily',a:24,o:'Sweden',i:'https://randomuser.me/api/portraits/women/13.jpg'},
+{n:'Hannah',a:22,o:'Norway',i:'https://randomuser.me/api/portraits/women/14.jpg'},
+{n:'Abigail',a:25,o:'USA',i:'https://randomuser.me/api/portraits/women/15.jpg'},
+{n:'Emily',a:21,o:'UK',i:'https://randomuser.me/api/portraits/women/16.jpg'},
+{n:'Elizabeth',a:24,o:'Germany',i:'https://randomuser.me/api/portraits/women/17.jpg'},
+{n:'Mila',a:23,o:'France',i:'https://randomuser.me/api/portraits/women/18.jpg'},
+{n:'Ella',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/19.jpg'},
+{n:'Aria',a:24,o:'Australia',i:'https://randomuser.me/api/portraits/women/20.jpg'},
+];
+let html='';
+girls.forEach((g,idx)=>{
+ let isFree = idx<3;
+ html+=`<div class="card ${isFree?'free':''}">
+ <img src="${g.i}">
+ <div class="info"><div class="name">${g.n}, ${g.a}</div><div class="age">From ${g.o}</div><div class="status">● Online now</div></div>
+ ${!isFree?`<div class="lock"><span>🔒</span><div>Subscribe to chat with ${g.n}</div><a class="btn" href="#pay">Unlock</a></div>`:''}
+ </div>`;
+});
+document.getElementById('grid').innerHTML=html;
+</script>
+</body>
+</html>

@@ -8,7 +8,8 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#f5f5f5}
 .header{background:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);position:sticky;top:0;z-index:10}
-.header b{color:#ff416c;font-size:20px}
+.header b{color:#ff416c;font-size:18px}
+.wallet{background:#222;color:#2ecc71;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:13px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
 .card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.08);position:relative}
 .card img{width:100%;height:180px;object-fit:cover}
@@ -16,31 +17,46 @@ body{background:#f5f5f5}
 .name{font-weight:bold;font-size:14px}
 .age{font-size:12px;color:#777}
 .status{font-size:11px;color:#2ecc71}
-.lock{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:10px}
+.earn{font-size:11px;color:#ff416c;font-weight:bold;margin-top:3px}
+.lock{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:10px}
 .lock span{font-size:32px}
 .btn{margin-top:8px;background:#ff416c;color:white;padding:8px 14px;border-radius:20px;font-size:12px;text-decoration:none;font-weight:bold;border:none;cursor:pointer}
-.premium-banner{background:linear-gradient(90deg,#ff416c,#ff9a44);color:white;padding:12px;text-align:center;font-weight:bold;font-size:14px}
+.btn-green{background:#2ecc71}
+.premium-banner{background:linear-gradient(90deg,#ff416c,#ff9a44);color:white;padding:12px;text-align:center;font-weight:bold;font-size:13px}
+.unlocked .lock{display:none}
+.balance-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.3);text-align:center;display:none;z-index:100;width:85%;max-width:320px}
 </style>
 </head>
 <body>
-<div class="header"><b>ForeignersLove ❤️</b><span id="user">Hi</span></div>
-<div class="premium-banner">🔒 All Profiles Locked - KES 150 to Unlock Each Girl</div>
+<div class="header"><b>ForeignersLove ❤️</b><div class="wallet" id="wallet">💰 $0.00</div></div>
+<div class="premium-banner">🔓 Pay KES 150 to Unlock & Earn $300 Per Chat - Withdraw Anytime!</div>
 <div class="grid" id="grid"></div>
 
 <div id="pay" style="background:white;margin:15px;padding:20px;border-radius:15px;text-align:center">
-<h3 style="color:#ff416c">Unlock Fee - KES 150 Per Girl</h3>
-<p style="font-size:13px;color:#555;margin:8px 0">Pay via M-Pesa to unlock private chat with any girl</p>
-<div style="display:grid;gap:10px;margin-top:15px">
-<div style="background:#ff416c;color:white;padding:14px;border-radius:10px;font-weight:bold;font-size:16px">Single Girl: KES 150 / $1.5</div>
-<div style="background:#222;color:white;padding:14px;border-radius:10px;font-weight:bold">5 Girls Package: KES 600 / $5</div>
-<div style="background:#ff9a44;color:white;padding:14px;border-radius:10px;font-weight:bold">All 20 Girls: KES 2000 / $15 - Best Deal</div>
+<h3 style="color:#ff416c">Unlock & Start Earning</h3>
+<p style="font-size:13px;color:#555;margin:8px 0">Pay KES 150 per girl, earn <b style="color:#2ecc71">$300</b> in your account instantly!</p>
+<div style="background:#f0fff4;border:2px dashed #2ecc71;padding:12px;border-radius:10px;margin:10px 0">
+<div style="font-size:12px;color:#555">Your Earnings</div>
+<div style="font-size:28px;font-weight:bold;color:#2ecc71" id="earnBig">$0.00</div>
+<div style="font-size:11px;color:#777">Earns $300 per unlocked girl</div>
 </div>
-<p style="font-size:11px;color:#999;margin-top:15px">After payment, WhatsApp: +254 7xx xxx xxx with screenshot for activation</p>
-<p style="font-size:11px;color:#999;margin-top:5px">M-Pesa Till: 123456 - ForeignersLove</p>
+<p style="font-size:11px;color:#999;margin-top:10px">M-Pesa Till: 123456 - ForeignersLove | After payment WhatsApp screenshot</p>
+</div>
+
+<div class="balance-popup" id="popup">
+<h3 style="color:#2ecc71">🎉 Congratulations!</h3>
+<p style="margin:10px 0" id="popupText">You unlocked Sofia!</p>
+<div style="font-size:32px;font-weight:bold;color:#2ecc71;margin:10px 0">$300.00</div>
+<p style="font-size:13px;color:#555">Added to your account balance!</p>
+<button onclick="closePopup()" style="background:#2ecc71;color:white;padding:10px 20px;border:none;border-radius:10px;margin-top:10px;font-weight:bold;width:100%">Continue Chatting</button>
 </div>
 
 <script>
-document.getElementById('user').innerText='Hi, '+(localStorage.getItem('fl_user')||'User');
+let balance = parseInt(localStorage.getItem('fl_balance')||'0');
+let unlocked = JSON.parse(localStorage.getItem('fl_unlocked')||'[]');
+updateWallet();
+
+document.getElementById('user')?null:0;
 const girls=[
 {n:'Sofia',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/1.jpg'},
 {n:'Emma',a:24,o:'UK',i:'https://randomuser.me/api/portraits/women/2.jpg'},
@@ -63,15 +79,56 @@ const girls=[
 {n:'Ella',a:22,o:'USA',i:'https://randomuser.me/api/portraits/women/19.jpg'},
 {n:'Aria',a:24,o:'Australia',i:'https://randomuser.me/api/portraits/women/20.jpg'},
 ];
+
+function render(){
 let html='';
-girls.forEach((g)=>{
- html+=`<div class="card">
+girls.forEach((g,idx)=>{
+ let isUnlocked = unlocked.includes(idx);
+ html+=`<div class="card ${isUnlocked?'unlocked':''}">
  <img src="${g.i}">
- <div class="info"><div class="name">${g.n}, ${g.a}</div><div class="age">From ${g.o}</div><div class="status">● Online now</div></div>
- <div class="lock"><span>🔒</span><div style="font-weight:bold;margin:5px 0">Locked - ${g.n}</div><div style="font-size:12px">Pay KES 150 to chat</div><a class="btn" href="#pay">Unlock for KES 150</a></div>
+ <div class="info">
+   <div class="name">${g.n}, ${g.a}</div>
+   <div class="age">From ${g.o}</div>
+   <div class="status">${isUnlocked?'💬 Chatting - Earning $300':'● Online now'}</div>
+   <div class="earn">${isUnlocked?'✅ $300 Earned':'💰 Earn $300 per chat'}</div>
+ </div>
+ <div class="lock">
+   <span>🔒</span>
+   <div style="font-weight:bold;margin:5px 0">${g.n} Locked</div>
+   <div style="font-size:11px">Unlock for KES 150<br>Earn $300 Instantly</div>
+   <button class="btn" onclick="unlockGirl(${idx},'${g.n}')">Unlock - KES 150</button>
+ </div>
  </div>`;
 });
 document.getElementById('grid').innerHTML=html;
+}
+render();
+
+function unlockGirl(idx,name){
+ // Simulate payment - in real you check M-Pesa
+ if(unlocked.includes(idx)) return;
+ unlocked.push(idx);
+ balance += 300;
+ localStorage.setItem('fl_unlocked',JSON.stringify(unlocked));
+ localStorage.setItem('fl_balance',balance.toString());
+ updateWallet();
+ render();
+ showPopup(name);
+}
+
+function updateWallet(){
+ document.getElementById('wallet').innerText='💰 $'+balance.toFixed(2);
+ document.getElementById('earnBig').innerText='$'+balance.toFixed(2);
+}
+
+function showPopup(name){
+ document.getElementById('popupText').innerText='You unlocked '+name+'!';
+ document.getElementById('popup').style.display='block';
+}
+
+function closePopup(){
+ document.getElementById('popup').style.display='none';
+}
 </script>
 </body>
 </html>
